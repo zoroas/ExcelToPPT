@@ -1,0 +1,314 @@
+﻿<Window x:Class="ExcelToPPT.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelToPPT"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        WindowState="Maximized"
+        Title="CAISL - Excel to PowerPoint Creator" Height="730" Width="900">
+    <Grid Background="White" AllowDrop="True">
+        <Grid.Resources>
+            <Style 
+                TargetType="TextBlock">
+                <Setter Property="Foreground" Value="Black"></Setter>
+            </Style>
+            <Style 
+                TargetType="TextBox">
+                <Setter Property="Background" Value="#FFEBEBEB"></Setter>
+                <Setter Property="Foreground" Value="Blue"></Setter>
+                <Setter Property="BorderThickness"  Value="0"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="24"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="491*"/>
+            <RowDefinition Height="130*"/>
+        </Grid.RowDefinitions>
+        <Image 
+            x:Name="image" 
+            HorizontalAlignment="Left" 
+            Height="55" 
+            VerticalAlignment="Top" 
+            Width="498"
+            Source="./Images/logo.png" 
+            Grid.ColumnSpan="2" 
+            Grid.Column="1" 
+            Grid.Row="1"
+            />
+
+        <StackPanel
+            Grid.Column="1" 
+            HorizontalAlignment="Stretch" 
+            Margin="12,23.8,12,0" 
+            Grid.Row="2" Grid.RowSpan="2">
+            <TextBlock 
+                    FontSize="24" 
+                    Text="Input" 
+                    Margin="0" 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    TextAlignment="Center"
+                    />
+            <TextBlock 
+                    FontSize="18" 
+                    Text="Excel data file:" 
+                    Margin="0,12,0,0"
+                    Grid.Row="1"
+                    TextAlignment="Left" 
+                    />
+            <Grid Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="55"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Padding="8"
+                    Margin="0,0,6,0"
+                    AllowDrop="True"
+                    FontSize="16" 
+                    Drop="TBExcelDataFile_Drop"
+                    Name="TBExcelDataFile"
+                    PreviewDragOver="TBExcelDataFile_PreviewDragOver"
+                    Text="{Binding Path=ExcelFileName}"
+                    />
+                <Button 
+                        Padding="12"
+                        FontSize="14"
+                        Grid.Column="1"
+                        Name="ButtonExcelDataFile"
+                        Click="ButtonExcelDataFile_Click"
+                        Content="..."
+                        />
+            </Grid>
+
+            <TextBlock 
+                        FontSize="18" 
+                        Text="PowerPoint template:" 
+                        Margin="0,12,0,0"
+                        Grid.Row="1"
+                        TextAlignment="Left" 
+                        />
+            <Grid Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="55"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                        Padding="8"
+                        Margin="0,0,6,0"
+                        FontSize="16" 
+                        Name="TBPowerPoint"
+                        Text="{Binding Path=PowerPointTemplateFileName}"
+                        AllowDrop="True"
+                        Drop="TBPowerPoint_Drop"
+                        PreviewDragOver="TBPowerPoint_PreviewDragOver"
+                        />
+                <Button 
+                        Padding="12"
+                        FontSize="14"
+                        Grid.Column="1"
+                        Name="ButtonPowerPointTemplate"
+                        Click="ButtonPowerPointTemplate_Click"
+                        Content="..."
+                        />
+            </Grid>
+
+            <TextBlock 
+                        FontSize="18" 
+                        Text="Photo folder:" 
+                        Margin="0,12,0,0"
+                        Grid.Row="1"
+                        TextAlignment="Left" 
+                        />
+            <Grid Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="55"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                        Padding="8"
+                        Margin="0,0,6,0"
+                        FontSize="16" 
+                        Name="TBPhotoFolder"
+                        Text="{Binding Path=PhotoFolderName}"
+                        AllowDrop="True"
+                        Drop="TBPhotoFolder_Drop"
+                        PreviewDragOver="TBPhotoFolder_PreviewDragOver"
+                        />
+                <Button 
+                        Padding="12"
+                        FontSize="14"
+                        Grid.Column="1"
+                        Name="ButtonPhotoFolder"
+                        Click="ButtonPhotoFolder_Click"
+                        Content="..."
+                        />
+            </Grid>
+
+            <TextBlock 
+                    FontSize="18" 
+                    Text="Row of excel data file to get headers:" 
+                    Margin="0,12,0,0"
+                    Grid.Row="1"
+                    TextAlignment="Left" 
+                    ToolTip="The row of the Excel data file where to get the headers."
+                    />
+            <TextBox
+                    Padding="8"
+                    Margin="0,6,0,0"
+                    FontSize="16" 
+                    Name="TBRowToGetColumns"
+                    Text="{Binding Path=RowNumberToGetColumns}"
+                ToolTip="The row of the Excel data file where to get the headers."
+                    />
+            <TextBlock 
+                    FontSize="18" 
+                    Text="Number of columns:" 
+                    Margin="0,12,0,0"
+                    Grid.Row="1"
+                    ToolTip="The number of columns of the Excel file to consider. This number is necessary because Excel files are not bounded."
+                    TextAlignment="Left" 
+                    />
+            <TextBox
+                    Padding="8"
+                    Margin="0,6,0,0"
+                    FontSize="16" 
+                    Name="TBNumberColumns"
+                    Text="{Binding Path=NumberOfColumns}"
+                    />
+
+
+            
+
+        </StackPanel>
+
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            >
+            <UniformGrid
+                Margin="12,24,12,0"
+                Columns="4">
+                <Button
+                    Name="ButtonCreateFile"
+                    Margin="0,0,12,0"
+                    Padding="12"
+                    FontSize="18"
+                    Content="Create File"
+                    Click="ButtonCreateFile_Click"
+                    />
+                <Button
+                    Name="ButtonExit"
+                    Margin="12,0,12,0"
+                    Padding="12"
+                    FontSize="18"
+                    Content="Exit"
+                    Click="ButtonExit_Click"
+                    />
+                <Button
+                        Name="ButtonOptions"
+                        Margin="12,0,0,0"
+                        Padding="12"
+                        FontSize="18"
+                        Content="Options"
+                        Click="ButtonOptions_Click"
+                />
+
+            </UniformGrid>
+        </StackPanel>
+
+        <StackPanel
+            Grid.Column="2" 
+            HorizontalAlignment="Stretch" 
+            Margin="12,23.8,12,0" 
+            Grid.Row="2" Grid.RowSpan="2">
+
+            <TextBlock 
+                    FontSize="24" 
+                    Text="Output" 
+                    Margin="0,0,0,0" 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    TextAlignment="Center"
+                    />
+            <TextBlock 
+                    FontSize="18" 
+                    Text="Output PowerPoint file" 
+                    Margin="0,12,0,0"
+                    Grid.Row="1"
+                    TextAlignment="Left" 
+                    />
+            <Grid Margin="0,6,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="55"/>
+                </Grid.ColumnDefinitions>
+                <TextBox
+                        Padding="8"
+                        Margin="0,0,6,0"
+                        FontSize="16" 
+                        Name="TBOutputPowerPoint"
+                        AllowDrop="True"
+                        PreviewDragOver="TBOutputPowerPoint_PreviewDragOver"
+                        Drop="TBOutputPowerPoint_Drop"
+                        Text="{Binding Path=PowerPointOutputFileName}"
+                        />
+                <Button 
+                        Padding="12"
+                        FontSize="14"
+                        Name="ButtonOutputPowerPoint"
+                        Grid.Column="1"
+                        Click="ButtonOutputPowerPoint_Click"
+                        Content="..."
+                        />
+            </Grid>
+
+
+
+            <TextBlock 
+                    FontSize="18" 
+                    TextWrapping="Wrap"
+                    Text="If there is a column named 'Photo' the program will replace the PowerPoint template in the field named ':Photo:'." 
+                    Margin="0,36,0,12" 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    TextAlignment="Justify"
+                    />
+            <TextBlock 
+                    FontSize="18" 
+                    TextWrapping="Wrap"
+                    Text="The values of the Photo column must be something like 01234 and NOT 01234.jpg." 
+                    Margin="0,6,0,12" 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    TextAlignment="Justify"
+                    />
+            <TextBlock 
+                    FontSize="18" 
+                    TextWrapping="Wrap"
+                    Text="The program automatically add the .jpg extension to the photo names." 
+                    Margin="0,6,0,12" 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    TextAlignment="Justify"
+                    />
+
+            <UniformGrid 
+                Margin="0,24,0,0"
+                Columns="2">
+            </UniformGrid>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
